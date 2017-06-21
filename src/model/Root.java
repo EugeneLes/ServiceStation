@@ -10,6 +10,15 @@ public class Root {
     String location;
     ArrayList<Customers> customers;
 
+    @Override
+    public String toString() {
+        return "Root{" +
+                "name='" + name + '\'' +
+                ", location='" + location + '\'' +
+                ", customers=" + customers +
+                '}';
+    }
+
     public String getName() {
         return name;
     }
@@ -33,6 +42,4 @@ public class Root {
     public void setCustomers(ArrayList<Customers> customers) {
         this.customers = customers;
     }
-
-
 }
