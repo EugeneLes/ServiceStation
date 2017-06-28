@@ -1,7 +1,7 @@
-package les;
+package entryPoint;
 
-import ModelParser.AbstractModelParser;
-import ModelParser.ParserFactory;
+import modelparser.AbstractModelParser;
+import modelparser.ParserFactory;
 import httpurlconnect.HTTPURLConnection;
 import model.Root;
 

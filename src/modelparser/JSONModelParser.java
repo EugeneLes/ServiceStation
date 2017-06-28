@@ -1,8 +1,7 @@
-package ModelParser;
+package modelparser;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.Gson;
 import model.Root;
 
 import java.io.BufferedReader;

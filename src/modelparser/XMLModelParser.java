@@ -1,4 +1,4 @@
-package ModelParser;
+package modelparser;
 
 import model.Customer;
 import model.Root;
