@@ -5,21 +5,37 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-
+/**
+ *
+ *
+ */
 public class HTTPURLConnection {
 
-    private static final String XML_URL= "http://kiparo.ru/t/service_station.xml";
-    private static final String JSON_URL= "http://kiparo.ru/t/service_station.json";
-    private static final String XML_PATH= "d:\\Idea\\IdeaProjects\\ServiceStation\\src\\service_station.xml";
-    private static final String JSON_PATH= "d:\\Idea\\IdeaProjects\\ServiceStation\\src\\service_station.json";
+    private final String XML_URL= "http://kiparo.ru/t/service_station.xml";
+    private final String JSON_URL= "http://kiparo.ru/t/service_station.json";
+    private final String XML_PATH= "d:\\Idea\\IdeaProjects\\ServiceStation\\src\\service_station.xml";
+    private final String JSON_PATH= "d:\\Idea\\IdeaProjects\\ServiceStation\\src\\service_station.json";
+    //Singleton implementation for HTTPURLConnection
+    private HTTPURLConnection(){
 
-
-    public static void uploadFiles(){
-        uploadFile(XML_URL,XML_PATH);
-        uploadFile(JSON_URL,JSON_PATH);
     }
 
-    private static void uploadFile(String fileUrl, String filepath){
+    private static class HTTPURLConnectionHolder{
+        private final static HTTPURLConnection instance = new HTTPURLConnection();
+    }
+
+    public static HTTPURLConnection getInstance(){
+        return HTTPURLConnectionHolder.instance;
+    }
+
+
+
+    public void downloadFiles(){
+        this.downloadFile(XML_URL,XML_PATH);
+        this.downloadFile(JSON_URL,JSON_PATH);
+    }
+
+    private void downloadFile(String fileUrl, String filepath){
 	// write your code here
 
         InputStream inputStream = null;
