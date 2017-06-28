@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class Root {
     String name;
     String location;
-    ArrayList<Customers> customers;
+    ArrayList<Customer> customers;
 
     @Override
     public String toString() {
@@ -35,11 +35,11 @@ public class Root {
         this.location = location;
     }
 
-    public ArrayList<Customers> getCustomers() {
+    public ArrayList<Customer> getCustomers() {
         return customers;
     }
 
-    public void setCustomers(ArrayList<Customers> customers) {
+    public void setCustomers(ArrayList<Customer> customers) {
         this.customers = customers;
     }
 }

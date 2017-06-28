@@ -7,7 +7,7 @@ import java.util.Date;
  * Created by Eugene on 21.06.2017.
  *
  */
-public class Customers {
+public class Customer {
 
 //    "id": 0,
 //            "name": "Ivan",
@@ -95,7 +95,7 @@ public class Customers {
 
     @Override
     public String toString() {
-        return "Customers{" +
+        return "Customer{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
