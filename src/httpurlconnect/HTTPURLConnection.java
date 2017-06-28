@@ -28,11 +28,27 @@ public class HTTPURLConnection {
         return HTTPURLConnectionHolder.instance;
     }
 
-
+    //thread implementation
 
     public void downloadFiles(){
-        this.downloadFile(XML_URL,XML_PATH);
-        this.downloadFile(JSON_URL,JSON_PATH);
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                downloadFile(XML_URL,XML_PATH);
+                System.out.println("XML download Complete");
+            }
+        });
+        Thread thread2 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                downloadFile(JSON_URL,JSON_PATH);
+                System.out.println("JSON download Complete");
+            }
+        });
+        thread.start();
+        thread2.start();
+//        this.downloadFile(XML_URL,XML_PATH);
+//        this.downloadFile(JSON_URL,JSON_PATH);
     }
 
     private void downloadFile(String fileUrl, String filepath){

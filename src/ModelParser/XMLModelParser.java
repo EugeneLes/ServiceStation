@@ -34,6 +34,7 @@ public class XMLModelParser extends AbstractModelParser {
     @Override
     public Root parse(String path) {
         Document dom = null;
+        Root root = new Root();
         try{
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance(); //to look at Singleton Pattern
             DocumentBuilder db = dbf.newDocumentBuilder();
@@ -42,27 +43,37 @@ public class XMLModelParser extends AbstractModelParser {
             System.out.println("Opening file error "+ e.toString());
             return null;
         }
-        Element root = dom.getDocumentElement();    //to look at javax.swing.text.Element
-        System.out.println("tag 1 = "+root.getTagName());
 
-        NodeList nameNodeList = root.getElementsByTagName("name");
+        Element domRoot = dom.getDocumentElement();    //to look at javax.swing.text.Element
+        System.out.println("tag 1 = "+domRoot.getTagName());
+
+        NodeList nameNodeList = domRoot.getElementsByTagName("name");
         Node nameNode = nameNodeList.item(0);
         System.out.println("tag 2 = "+ nameNode.getNodeName());
 
         String name = nameNode.getFirstChild().getNodeValue();
+        root.setName(name);
         System.out.println("name = "+ name);
 
-        NodeList customerNodeList = root.getElementsByTagName("customers");
+        NodeList locationNodeList = domRoot.getElementsByTagName("location");
+        Node locationNode = locationNodeList.item(0);
+        System.out.println("tag 2 = "+ locationNode.getNodeName());
+
+        String location = locationNode.getFirstChild().getNodeValue();
+        root.setLocation(location);
+        System.out.println("location = "+ location);
+
+        NodeList customerNodeList = domRoot.getElementsByTagName("customers");
         Node customersNode = customerNodeList.item(0);
         System.out.println("tag 3 = " + customersNode.getNodeName());
 
-        NodeList elementsNodeList = customersNode.getChildNodes();
+        //NodeList elementsNodeList = customersNode.getChildNodes();
 
         ArrayList<Customer> listCustomers = new ArrayList<>();
 
-        for (int i = 0; i < elementsNodeList.getLength(); i++) {
+        for (int i = 0; i < customerNodeList.getLength(); i++) {
 
-            Node node = elementsNodeList.item(i);
+            Node node = customerNodeList.item(i);
 
             if (node.getNodeType() != Node.ELEMENT_NODE) {
                 continue;
@@ -76,8 +87,8 @@ public class XMLModelParser extends AbstractModelParser {
             System.out.println("tag = " + node.getNodeName());
 
             // id
-            NodeList idElemlist = element.getElementsByTagName("id");
-            Element idElement = (Element) idElemlist.item(0);
+            NodeList idElemList = element.getElementsByTagName("id");
+            Element idElement = (Element) idElemList.item(0);
             String idCustomer = idElement.getFirstChild().getNodeValue();
             System.out.println("id : " + idCustomer);
 
@@ -139,6 +150,7 @@ public class XMLModelParser extends AbstractModelParser {
             System.out.println(e.toString());
 
         }
-        return null;
+        root.setCustomers(listCustomers);
+        return root;
     }
 }
