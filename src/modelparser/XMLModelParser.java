@@ -12,10 +12,6 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import java.sql.Date;
 import java.util.ArrayList;
 
-/**
- * Created by LeskovskijE on 6/28/2017.
- */
-
 //<root>
 //        <name>Service station 213</name>
 //        <location>Minsk</location>
@@ -30,6 +26,9 @@ import java.util.ArrayList;
 //            <car>Opel</car>
 //            <discount>true</discount>
 //        </customers>
+/**
+ * Created by LeskovskijE on 6/28/2017.
+ */
 public class XMLModelParser extends AbstractModelParser {
     @Override
     public Root parse(String path) {

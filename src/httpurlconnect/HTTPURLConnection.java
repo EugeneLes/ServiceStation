@@ -13,8 +13,8 @@ public class HTTPURLConnection {
 
     private final String XML_URL= "http://kiparo.ru/t/service_station.xml";
     private final String JSON_URL= "http://kiparo.ru/t/service_station.json";
-    private final String XML_PATH= "d:\\Idea\\IdeaProjects\\ServiceStation\\src\\service_station.xml";
-    private final String JSON_PATH= "d:\\Idea\\IdeaProjects\\ServiceStation\\src\\service_station.json";
+    private final String XML_PATH= "d:\\Idea\\IdeaProjects\\view.ServiceStationFX\\src\\service_station.xml";
+    private final String JSON_PATH= "d:\\Idea\\IdeaProjects\\view.ServiceStationFX\\src\\service_station.json";
     //Singleton implementation for HTTPURLConnection
     private HTTPURLConnection(){
 

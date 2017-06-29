@@ -7,6 +7,10 @@ import java.util.regex.Pattern;
  * Created by LeskovskijE on 6/28/2017.
  */
 public class ParserFactory {
+     /**
+     * Creates XMLModelParcer or JSONModelParser object depending on file in arguments.
+     * @return XMLModelParcer or JSONModelParser.
+     */
     public AbstractModelParser getParser(String path){
         AbstractModelParser parser = null;
         Pattern patternXML = Pattern.compile(".*\\.xml");
