@@ -94,7 +94,7 @@ public class XMLModelParser extends AbstractModelParser {
             customer.setId(Integer.valueOf(idCustomer));
 
             // name
-            String nameCustomer = element.getElementsByTagName("surname").item(0).getTextContent();
+            String nameCustomer = element.getElementsByTagName("name").item(0).getTextContent();
             System.out.println("name : " + nameCustomer);
 
             customer.setName(nameCustomer);

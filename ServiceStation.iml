@@ -14,5 +14,6 @@
     <orderEntry type="library" name="gson-2.5" level="project" />
     <orderEntry type="library" name="jackson-annotations-2.9.0.pr4" level="project" />
     <orderEntry type="library" name="jackson-annotations-2.9.0.pr4-javadoc" level="project" />
+    <orderEntry type="library" name="forms_rt" level="project" />
   </component>
 </module>
