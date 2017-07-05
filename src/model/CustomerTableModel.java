@@ -10,14 +10,14 @@ import java.util.concurrent.CopyOnWriteArrayList;
  */
 public class CustomerTableModel implements TableModel{
     private Set<TableModelListener> listeners = new HashSet<TableModelListener>();
-    List<Customer> customers;
-    public CustomerTableModel(List<Customer> customers) {
-        this.customers = customers;
+    Root root;
+    public CustomerTableModel(Root root) {
+        this.root = root;
     }
 
     @Override
     public int getRowCount() {
-        return customers.size();
+        return root.getCustomers().size();
     }
 
     @Override
@@ -76,7 +76,7 @@ public class CustomerTableModel implements TableModel{
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        Customer customer = customers.get(rowIndex);
+        Customer customer = root.getCustomers().get(rowIndex);
         switch (columnIndex) {
             case 0:
                 return customer.getId();

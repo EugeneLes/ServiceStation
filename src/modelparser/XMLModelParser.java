@@ -1,5 +1,6 @@
 package modelparser;
 
+import controller.Controller;
 import model.Customer;
 import model.Root;
 import org.w3c.dom.Document;
@@ -33,7 +34,7 @@ public class XMLModelParser extends AbstractModelParser {
     @Override
     public Root parse(String path) {
         Document dom = null;
-        Root root = new Root();
+        Root root = Controller.getInstance().getRoot();
         try{
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance(); //to look at Singleton Pattern
             DocumentBuilder db = dbf.newDocumentBuilder();

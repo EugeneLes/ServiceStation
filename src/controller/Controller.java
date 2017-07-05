@@ -1,9 +1,13 @@
 package controller;
 
 import httpurlconnect.HTTPURLConnection;
+import model.Customer;
 import model.Root;
 import modelparser.AbstractModelParser;
 import modelparser.ParserFactory;
+
+import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by LeskovskijE on 6/29/2017.
@@ -11,6 +15,16 @@ import modelparser.ParserFactory;
 public class Controller {
     static final String jsonPath = "src\\service_station.json";
     static final String xmlPATH= "src\\service_station.xml";
+
+    public Root getRoot() {
+        return root;
+    }
+
+    public void setRoot(Root root) {
+        this.root = root;
+    }
+
+    Root root;
     private Controller(){
 
     }
@@ -34,14 +48,22 @@ public class Controller {
         connection.downloadFiles();
         ParserFactory parserFactory = new ParserFactory();
         AbstractModelParser parser = parserFactory.getParser(path);
-        Root root = parser.parse(path);
-        System.out.println(root.toString());
+        setRoot(parser.parse(path));
+        System.out.println(getRoot().toString());
+
 
     }
-    public Root initializeRootModel(){
-        ParserFactory parserFactory = new ParserFactory();
-        AbstractModelParser parser = parserFactory.getParser(jsonPath);
-        return  parser.parse(jsonPath);
+    public void initializeRootModel(){
+//        ParserFactory parserFactory = new ParserFactory();
+//        AbstractModelParser parser = parserFactory.getParser(jsonPath);
+        Date today = new Date();
+        root = new Root();
+        //Customer customer = new Customer();
+        Customer customer = new Customer(00,"Name","","",today,today,new ArrayList<String>(),true);
+        ArrayList<Customer> customers = new ArrayList<>();
+        customers.add(customer);
+        root.setCustomers(customers);
+        //parser.parse(jsonPath);
     }
 }
 

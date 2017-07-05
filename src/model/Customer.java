@@ -28,7 +28,22 @@ public class Customer {
     Date dateOfBirth;
     ArrayList<String> car;
     boolean discount;
-//Getters and Setters
+
+    public Customer() {
+    }
+
+    public Customer(int id, String name, String surname, String middle_name, Date lastOrder, Date dateOfBirth, ArrayList<String> car, boolean discount) {
+        this.id = id;
+        this.name = name;
+        this.surname = surname;
+        this.middle_name = middle_name;
+        this.lastOrder = lastOrder;
+        this.dateOfBirth = dateOfBirth;
+        this.car = car;
+        this.discount = discount;
+    }
+
+    //Getters and Setters
     public int getId() {
         return id;
     }
