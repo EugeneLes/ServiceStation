@@ -17,6 +17,7 @@ import java.util.*;
  */
 public class Controller {
     private String filteredBy = "No filter";
+    private volatile String filterStr = "";
     private volatile String fileType;
     private JTable jTable;
     Root root;
@@ -26,6 +27,13 @@ public class Controller {
 
     public void setFilteredBy(String filteredBy) {
        this.filteredBy = filteredBy;
+    }
+    public String getFilterStr() {
+        return filterStr;
+    }
+
+    public void setFilterStr(String filterStr) {
+        this.filterStr = filterStr;
     }
     public String getFileType() {
         return fileType;
@@ -114,9 +122,30 @@ public class Controller {
         }
         Controller.getInstance().getRoot().setCustomers(customers);
         Controller.getInstance().getjTable().setModel(new CustomerTableModel(Controller.getInstance().getRoot()) );//need to update TableModel just after sorting
-        return;
-
     }
 
+    private String getFilteredField(Customer customer){
+        switch (filteredBy) {
+            case "Name":
+                return customer.getName();
+            case "Surname":
+                return customer.getName();
+            case "Middle Name":
+                return customer.getName();
+        }
+        return "";
+    }
+
+    public void filterTable(){
+        ArrayList<Customer> customersOrig = this.getRoot().getCustomers();
+        ArrayList<Customer> customersFiltered = new ArrayList<>();
+        for (Customer cust:customersOrig){
+            if(getFilteredField(cust).contains(getFilterStr())) {
+                customersFiltered.add(cust);
+            }
+        }
+        Controller.getInstance().getjTable().setModel(new CustomerTableModel(Controller.getInstance().getRoot()) );//need to update TableModel just after parsing
+        System.out.println("Filtered by "+ getFilterStr());
+    }
 }
 

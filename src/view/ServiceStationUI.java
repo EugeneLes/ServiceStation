@@ -24,7 +24,7 @@ public class ServiceStationUI {
     private JComboBox comboBoxSort;
     private JLabel statusLabel;
     static private String[] comboSortItems = {"ID","Name","Surname","Middle Name","Date of Birth","Last Order Day","Discount"};
-    static private String[] comboFilterItems = {"No filter","ID","Name","Surname","Middle Name","Cars","Discount"};
+    static private String[] comboFilterItems = {"No filter","Name","Surname","Middle Name","Cars","Discount"};
     static private String filteredBy = "No filter";
 
     public static void main(String[] args) {
@@ -53,6 +53,22 @@ public class ServiceStationUI {
         comboBoxSort.addItemListener(new MySorterItemListener());
         for (String s:comboFilterItems) {comboFilteredField.addItem(s);}
         comboFilteredField.addItemListener(new MyFilterItemListener());
+        textFilterField.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+                System.out.println("keyPressed"+e.getKeyCode());
+                Controller.getInstance().setFilteredBy(textFilterField.getText());
+                Controller.getInstance().filterTable();
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+            }
+        });
 
     }
 
@@ -78,8 +94,6 @@ public class ServiceStationUI {
                     statusLabel.setText("FileType - XML.");
                 }
                 Controller.getInstance().performUpdateModel();
-//                tableCustomers.createDefaultColumnsFromModel();
-//                tableCustomers.setAutoCreateColumnsFromModel(true);
             } else if (command.equals("Filter")) {
                 statusLabel.setText("Filter Button clicked.");
             } else {
@@ -98,8 +112,6 @@ public class ServiceStationUI {
                 System.out.println("Item: " + itemStr);
                 System.out.println(itemEvent.getStateChange());
                 Controller.getInstance().sortBy(itemStr);
-//                ItemSelectable is = itemEvent.getItemSelectable();
-//                System.out.println(", Selected: " + is.getSelectedObjects().toString());
             }
         }
     }
@@ -110,8 +122,6 @@ public class ServiceStationUI {
             System.out.println((state == ItemEvent.SELECTED) ? " Selected" : " Deselected");
             if (state == ItemEvent.SELECTED) {
                 String itemStr = itemEvent.getItem().toString();
-//                System.out.println("Item: " + itemStr);
-//                System.out.println(itemEvent.getStateChange());
                 Controller.getInstance().setFilteredBy(itemStr);
             }
         }
