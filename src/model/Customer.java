@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
 
 /**
@@ -121,4 +122,79 @@ public class Customer {
                 ", discount=" + discount +
                 '}';
     }
+
+    // реализуем интерфейс Comparator, для сортировки по id
+    public static Comparator<Customer> sortedById = new Comparator<Customer>() {
+
+        public int compare(Customer obj1, Customer obj2) {
+
+            int id1 = obj1.getId();
+            int id2 = obj2.getId();
+
+            if(id1 > id2) {
+                return 1;
+            }
+            else if(id1 < id2) {
+                return -1;
+            }
+            else {
+                return 0;
+            }
+        }
+    };
+    // реализуем интерфейс Comparator, для сортировки по имени
+    public static Comparator<Customer> sortedByName = new Comparator<Customer>() {
+
+        public int compare(Customer obj1, Customer obj2) {
+
+            String str1 = obj1.getName();
+            String str2 = obj2.getName();
+
+            return str1.compareTo(str2);
+        }
+    };
+
+    // реализуем интерфейс Comparator, для сортировки по фамилии
+    public static Comparator<Customer> sortedBySurname = new Comparator<Customer>() {
+
+        public int compare(Customer obj1, Customer obj2) {
+
+            String str1 = obj1.getSurname();
+            String str2 = obj2.getSurname();
+
+            return str1.compareTo(str2);
+        }
+    };
+    // реализуем интерфейс Comparator, для сортировки по middle name
+    public static Comparator<Customer> sortedBymiddlename = new Comparator<Customer>() {
+
+        public int compare(Customer obj1, Customer obj2) {
+
+            String str1 = obj1.getMiddle_name();
+            String str2 = obj2.getMiddle_name();
+
+            return str1.compareTo(str2);
+        }
+    };
+    // реализуем интерфейс Comparator, для сортировки по дате последнего заказа
+    public static Comparator<Customer> sortedByLastOrder = new Comparator<Customer>() {
+
+        public int compare(Customer obj1, Customer obj2) {
+
+            Date date1 = obj1.getLastOrder();
+            Date date2 = obj2.getLastOrder();
+            return date1.compareTo(date2);
+        }
+    };
+    // реализуем интерфейс Comparator, для сортировки по дате последнего заказа
+    public static Comparator<Customer> sortedByBirthDay = new Comparator<Customer>() {
+
+        public int compare(Customer obj1, Customer obj2) {
+
+            Date date1 = obj1.getDateOfBirth();
+            Date date2 = obj2.getDateOfBirth();
+            return date1.compareTo(date2);
+        }
+    };
+
 }

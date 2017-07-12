@@ -1,4 +1,6 @@
 package httpurlconnect;
+import controller.Controller;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
@@ -17,7 +19,6 @@ public class HTTPURLConnection {
     private final String JSON_PATH= "d:\\Idea\\IdeaProjects\\ServiceStation\\src\\service_station.json";
     //Singleton implementation for HTTPURLConnection
     private HTTPURLConnection(){
-
     }
 
     private static class HTTPURLConnectionHolder{
@@ -31,24 +32,14 @@ public class HTTPURLConnection {
     //thread implementation
 
     public void downloadFiles(){
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                downloadFile(XML_URL,XML_PATH);
-                System.out.println("XML download Complete");
-            }
-        });
-        Thread thread2 = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                downloadFile(JSON_URL,JSON_PATH);
-                System.out.println("JSON download Complete");
-            }
-        });
-        thread.start();
-        thread2.start();
-//        this.downloadFile(XML_URL,XML_PATH);
-//        this.downloadFile(JSON_URL,JSON_PATH);
+        String type = Controller.getInstance().getFileType();
+        if (type=="XML"){
+            downloadFile(XML_URL,XML_PATH);
+            System.out.println("XML download Complete");
+        }else if (type=="JSON"){
+            downloadFile(JSON_URL,JSON_PATH);
+            System.out.println("JSON download Complete");
+        }
     }
 
     private void downloadFile(String fileUrl, String filepath){

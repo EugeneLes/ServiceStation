@@ -1,6 +1,7 @@
 package model;
 
 import javax.swing.event.TableModelListener;
+import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableModel;
 import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -8,7 +9,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 /**
  * Created by Eugene on 04.07.2017.
  */
-public class CustomerTableModel implements TableModel{
+public class CustomerTableModel extends AbstractTableModel{
     private Set<TableModelListener> listeners = new HashSet<TableModelListener>();
     Root root;
     public CustomerTableModel(Root root) {
@@ -106,6 +107,7 @@ public class CustomerTableModel implements TableModel{
     @Override
     public void addTableModelListener(TableModelListener listener) {
         listeners.add(listener);
+
     }
 
     @Override

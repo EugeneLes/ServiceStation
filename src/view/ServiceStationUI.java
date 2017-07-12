@@ -1,20 +1,13 @@
 package view;
 
-import com.intellij.uiDesigner.core.GridConstraints;
-import com.intellij.uiDesigner.core.GridLayoutManager;
 import controller.Controller;
-import httpurlconnect.HTTPURLConnection;
-import model.Customer;
 import model.CustomerTableModel;
-import model.Root;
-import modelparser.AbstractModelParser;
-import modelparser.ParserFactory;
 
 import javax.swing.*;
-import javax.swing.table.TableModel;
-import java.awt.*;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
+import javax.swing.table.AbstractTableModel;
 import java.awt.event.*;
-import java.util.ArrayList;
 
 /**
  * Created by LeskovskijE on 6/29/2017.
@@ -30,28 +23,15 @@ public class ServiceStationUI {
     private JComboBox comboFilteredField;
     private JComboBox comboBoxSort;
     private JLabel statusLabel;
+    static private String[] comboSortItems = {"ID","Name","Surname","Middle Name","Date of Birth","Last Order Day","Discount"};
+    static private String[] comboFilterItems = {"No filter","ID","Name","Surname","Middle Name","Cars","Discount"};
+    static private String filteredBy = "No filter";
 
     public static void main(String[] args) {
-        // write your code here
-        System.out.println("Start at EntryPoint at " + Runtime.getRuntime() + " , " + System.currentTimeMillis());
-        //JFrame mainFrame = new JFrame();
-//        Root root = new Root();
+        // This is an Entry Point
+        System.out.println("Start at EntryPoint at " + System.currentTimeMillis());
+        new ServiceStationUI();
 
-        ServiceStationUI serviceStationUI = new ServiceStationUI();
-        //serviceStationUI.showUI();
-        //Establish connection and dounloading files
-//        HTTPURLConnection connection = HTTPURLConnection.getInstance();
-//        connection.downloadFiles();
-//
-//        ParserFactory parserFactory = new ParserFactory();
-//        AbstractModelParser parser = parserFactory.getParser(jsonPath);
-//        Root root = parser.parse(jsonPath);
-//        System.out.println(root.toString());
-//        System.out.println("Parse xml ----->");
-//        parser = parserFactory.getParser(xmlPATH);
-//        root = parser.parse(xmlPATH);
-//        System.out.println(root.toString());
-//        System.out.println("Finished");
     }
 
     public ServiceStationUI() {
@@ -62,12 +42,17 @@ public class ServiceStationUI {
         frame.setVisible(true);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         Controller.getInstance().initializeRootModel();
-        TableModel model = new CustomerTableModel(Controller.getInstance().getRoot());
-        //JTable table = new JTable(model);
-        tableCustomers.setModel(model);
-//        createUIComponents();
-        buttonUpdateModel.addActionListener(new ButtonClickListener());
+        AbstractTableModel tableModel = new CustomerTableModel(Controller.getInstance().getRoot());
 
+        Controller.getInstance().setjTable(tableCustomers);
+
+        tableCustomers.setModel(tableModel);
+        tableCustomers.getModel().addTableModelListener(new MyTableModelListener());
+        buttonUpdateModel.addActionListener(new ButtonClickListener());
+        for (String s:comboSortItems) {comboBoxSort.addItem(s);}
+        comboBoxSort.addItemListener(new MySorterItemListener());
+        for (String s:comboFilterItems) {comboFilteredField.addItem(s);}
+        comboFilteredField.addItemListener(new MyFilterItemListener());
 
     }
 
@@ -86,18 +71,54 @@ public class ServiceStationUI {
             if (command.equals("UpdateModel")) {
                 Controller controller = Controller.getInstance();
                 if (radioJSON.isSelected()) {
-                    controller.performUpdateModel("JSON");
+                    controller.setFileType(".json");
+                    statusLabel.setText("FileType - JSON.");
                 } else {
-                    controller.performUpdateModel("XML");
-                };
-                tableCustomers.setAutoCreateColumnsFromModel(true);
+                    controller.setFileType(".xml");
+                    statusLabel.setText("FileType - XML.");
+                }
+                Controller.getInstance().performUpdateModel();
+//                tableCustomers.createDefaultColumnsFromModel();
+//                tableCustomers.setAutoCreateColumnsFromModel(true);
             } else if (command.equals("Filter")) {
-//                statusLabel.setText("Submit Button clicked.");
+                statusLabel.setText("Filter Button clicked.");
             } else {
-//                statusLabel.setText("Cancel Button clicked.");
+                statusLabel.setText("Cancel Button clicked.");
             }
         }
     }
-    //private class
+    public class MySorterItemListener implements ItemListener
+    {
+        public void itemStateChanged(ItemEvent itemEvent) {
+            int state = itemEvent.getStateChange();
+            System.out.println((state == ItemEvent.SELECTED) ? " Selected" : " Deselected");
+            if (state == ItemEvent.SELECTED) {
 
+                String itemStr = itemEvent.getItem().toString();
+                System.out.println("Item: " + itemStr);
+                System.out.println(itemEvent.getStateChange());
+                Controller.getInstance().sortBy(itemStr);
+//                ItemSelectable is = itemEvent.getItemSelectable();
+//                System.out.println(", Selected: " + is.getSelectedObjects().toString());
+            }
+        }
+    }
+    public class MyFilterItemListener implements ItemListener
+    {
+        public void itemStateChanged(ItemEvent itemEvent) {
+            int state = itemEvent.getStateChange();
+            System.out.println((state == ItemEvent.SELECTED) ? " Selected" : " Deselected");
+            if (state == ItemEvent.SELECTED) {
+                String itemStr = itemEvent.getItem().toString();
+//                System.out.println("Item: " + itemStr);
+//                System.out.println(itemEvent.getStateChange());
+                Controller.getInstance().setFilteredBy(itemStr);
+            }
+        }
+    }
+    public class MyTableModelListener implements TableModelListener{
+        public void tableChanged(TableModelEvent e) {
+            System.out.println("Table changed"+e);
+        }
+    }
 }
